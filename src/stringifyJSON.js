@@ -8,15 +8,11 @@ var stringifyJSON = function(obj) {
 
   // test for array
   if (Array.isArray(obj)) {
-    var result = '[';
+    var result = [];
     obj.forEach(function (value) {
-      result += stringifyJSON(value) + ',';
+      result.push(stringifyJSON(value));
     });
-    if (result.length > 1) {
-      result = result.slice(0, result.length - 1);
-    }
-    result += ']';
-    return result;
+    return '[' + result.join(',') + ']';
   }
 
   // test for object
