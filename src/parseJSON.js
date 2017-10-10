@@ -10,6 +10,11 @@ var parseJSON = function(json) {
     if (json.charAt(currentChar) === ']') {
       return arr; 
     } 
+    if (json.charAt(currentChar) === '[') {
+      // nested array
+      var arrayClose = json.lastIndexOf(']', currentChar + 1);
+      arr.push(parseJSON(json.slice(currentChar, arrayClose))); 
+    }
     do {
     // else -> do while loop? 
       // determine what type the next value is
@@ -34,14 +39,14 @@ var parseJSON = function(json) {
         currentChar += 4;
       } else {
       // else if number
-        var ch = json.charAt(currentChar);
-        // ch = parseInt(ch);
-        if (typeof ch === 'number' || json.charAt(currentChar) === '-' || json.charAt(currentChar) === '.') {
-          var numIndex = json.indexOf(',') === -1 ? json.length - 1 : json.indexOf(',');
-          var test = Number(json.slice(currentChar, numIndex));
-          arr.push(test);
-          currentChar = numIndex;
+          // var numIndex = json.indexOf(',', currentChar + 1) === -1 ? json.indexOf(']'), currentChar + 1 : json.indexOf(',', currentChar + 1);
+        var numIndex = json.indexOf(',', currentChar + 1);
+        if (numIndex === -1) {
+          json.indexOf(']');
         }
+        var test = Number(json.slice(currentChar, numIndex));
+        arr.push(test);
+        currentChar = numIndex;
       }
       currentChar++;
       // what do we look for to determine 
