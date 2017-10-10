@@ -37,12 +37,12 @@ var parseJSON = function(json) {
       } else if (json.charAt(currentChar) === 't') {
         arr.push(true);
         currentChar += 4;
-      } else {
+      } else if (json.charAt(currentChar) !== '[') {
       // else if number
           // var numIndex = json.indexOf(',', currentChar + 1) === -1 ? json.indexOf(']'), currentChar + 1 : json.indexOf(',', currentChar + 1);
         var numIndex = json.indexOf(',', currentChar + 1);
         if (numIndex === -1) {
-          json.indexOf(']');
+          numIndex = json.indexOf(']');
         }
         var test = Number(json.slice(currentChar, numIndex));
         arr.push(test);
